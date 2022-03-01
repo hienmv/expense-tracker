@@ -21,3 +21,16 @@ function App() {
 }
 
 export default App;
+
+function ADDtext (e) {
+  var text = e.target.value;
+  console.log("addtext",text)
+  localStorage.setItem('current_text', text);
+  setText(text);
+};
+function ADDamount (e) {
+  var amount = e.target.value;
+  console.log("addamount",amount)
+  localStorage.setItem('current_text', amount);
+  setText(amount);
+}
