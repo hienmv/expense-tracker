@@ -27,8 +27,7 @@ h3 {
 }
 
 
-input[type='text'],
-input[type='number'] {
+.input-layout {
   border: 1px solid #dedede;
   border-radius: 2px;
   display: block;
