@@ -1,29 +1,33 @@
 import React, { useState } from "react";
-import { v4 as uuidv4 } from 'uuid'
+
 
 export const AddTransaction = () => {
   const [text, setText] = useState("");
   const [amount, setAmount] = useState(0);
 
-  const onSetTextChange = (e) => {
-    setText(e.target.value);
+
+  const handleText = (e) => {
+    setText(e.key.value);
   };
-  const onSetAmountChange = (e) => {
-    setAmount(
-      e.target.value < 0
-        ? (e.target.value = 0)
-        : e.target.value
-    );
-    
-    e.target.value = 'e'
-        ? (e.target.value = 'error')
-        : e.target.value
+
+  const handleAmount = (e) => {
+    if (e.key === 'e') {
+      setAmount(e.key.preventDefault);
+    } else {
+      setAmount(e.key.value);
+    }
   };
 
   const onAddBtnClick = (e) => {
-    setText([...text], {id: 'v4', name: text});
-    setAmount([...amount], {id: 'v4', name: amount});
-  }
+    e.preventDefault();
+    console.log("result", text, amount);
+
+    localStorage.setItem("current_text", text);
+    setText(text);
+    localStorage.setItem("current_amount", amount);
+    setAmount(amount);
+  };
+
 
   return (
     <>
@@ -35,7 +39,7 @@ export const AddTransaction = () => {
             className="input-layout"
             type="text"
             value={text}
-            onChange={onSetTextChange}
+            onKeyPress={(e) => handleText(e)}
             placeholder="Enter text..."
             maxLength="50"
             required
@@ -51,14 +55,17 @@ export const AddTransaction = () => {
             className="input-layout"
             type="number"
             value={amount}
-            onChange={onSetAmountChange}
+            onKeyPress={(e) => handleAmount(e)}
             placeholder="Enter amount..."
             maxLength="10"
             required
           />
         </div>
-        <button className="btn" onClick={onAddBtnClick}>Add transaction</button>
+        <button className="btn" onClick={(e) => onAddBtnClick(e)}>Add transaction</button>
       </form>
+
+
+
     </>
   );
 };
