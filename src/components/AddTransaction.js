@@ -17,23 +17,27 @@ export const AddTransaction = () => {
   const onSubmitTransaction = (event) => {
     event.preventDefault();
     const currentTransaction = {
-      'title': text,
-      'amount': amount
-    }
+      title: text,
+      amount: amount,
+    };
     addingTransaction(currentTransaction);
+
+    // reset input value
+    setText("");
+    setAmount("");
   };
 
   const addingTransaction = (transaction) => {
     // lấy ra danh sách các transaction hiện tại
     let currentTransactions = JSON.parse(localStorage.getItem("transactions"));
     if (currentTransactions == null) {
-       currentTransactions = [];
+      currentTransactions = [];
     }
     // thêm transaction hiện tại vào danh sách các transaction
     currentTransactions = [...currentTransactions, transaction];
     // lưu lại danh sách transaction vào local storage
     localStorage.setItem("transactions", JSON.stringify(currentTransactions));
-  } 
+  };
 
   return (
     <>
