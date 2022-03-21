@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 export const AddTransaction = () => {
   const [text, setText] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState("");
 
   const handleText = (event) => {
     setText(event.target.value);
@@ -14,23 +14,38 @@ export const AddTransaction = () => {
     setAmount(amount);
   };
 
-  const onAddBtnClick = (event) => {
+  const onSubmitTransaction = (event) => {
     event.preventDefault();
-    localStorage.setItem("current_text", text);
-    localStorage.setItem("current_amount", amount);
+    const currentTransaction = {
+      'title': text,
+      'amount': amount
+    }
+    addingTransaction(currentTransaction);
   };
+
+  const addingTransaction = (transaction) => {
+    // lấy ra danh sách các transaction hiện tại
+    let currentTransactions = JSON.parse(localStorage.getItem("transactions"));
+    if (currentTransactions == null) {
+       currentTransactions = [];
+    }
+    // thêm transaction hiện tại vào danh sách các transaction
+    currentTransactions = [...currentTransactions, transaction];
+    // lưu lại danh sách transaction vào local storage
+    localStorage.setItem("transactions", JSON.stringify(currentTransactions));
+  } 
 
   return (
     <>
       <h3>Add new transaction</h3>
-      <form>
+      <form onSubmit={onSubmitTransaction}>
         <div className="form-control">
           <label htmlFor="text">Text</label>
           <input
             className="input-layout"
             type="text"
             value={text}
-            onChange={(e) => handleText(e)}
+            onChange={handleText}
             placeholder="Enter text..."
             maxLength="50"
             required
@@ -46,15 +61,12 @@ export const AddTransaction = () => {
             className="input-layout"
             type="number"
             value={amount}
-            onChange={(e) => handleAmount(e)}
+            onChange={handleAmount}
             placeholder="Enter amount..."
-            maxLength="10"
             required
           />
         </div>
-        <button className="btn" onClick={(e) => onAddBtnClick(e)}>
-          Add transaction
-        </button>
+        <button className="btn">Add transaction</button>
       </form>
     </>
   );
