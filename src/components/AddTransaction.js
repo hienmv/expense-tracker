@@ -1,33 +1,24 @@
 import React, { useState } from "react";
 
-
 export const AddTransaction = () => {
   const [text, setText] = useState("");
   const [amount, setAmount] = useState(0);
 
-
-  const handleText = (e) => {
-    setText(e.key.value);
+  const handleText = (event) => {
+    setText(event.target.value);
   };
 
-  const handleAmount = (e) => {
-    if (e.key === 'e') {
-      setAmount(e.key.preventDefault);
-    } else {
-      setAmount(e.key.value);
-    }
-  };
-
-  const onAddBtnClick = (e) => {
-    e.preventDefault();
-    console.log("result", text, amount);
-
-    localStorage.setItem("current_text", text);
-    setText(text);
-    localStorage.setItem("current_amount", amount);
+  const handleAmount = (event) => {
+    let amount = event.target.value;
+    amount = amount.replace("e", "");
     setAmount(amount);
   };
 
+  const onAddBtnClick = (event) => {
+    event.preventDefault();
+    localStorage.setItem("current_text", text);
+    localStorage.setItem("current_amount", amount);
+  };
 
   return (
     <>
@@ -39,7 +30,7 @@ export const AddTransaction = () => {
             className="input-layout"
             type="text"
             value={text}
-            onKeyPress={(e) => handleText(e)}
+            onChange={(e) => handleText(e)}
             placeholder="Enter text..."
             maxLength="50"
             required
@@ -55,17 +46,16 @@ export const AddTransaction = () => {
             className="input-layout"
             type="number"
             value={amount}
-            onKeyPress={(e) => handleAmount(e)}
+            onChange={(e) => handleAmount(e)}
             placeholder="Enter amount..."
             maxLength="10"
             required
           />
         </div>
-        <button className="btn" onClick={(e) => onAddBtnClick(e)}>Add transaction</button>
+        <button className="btn" onClick={(e) => onAddBtnClick(e)}>
+          Add transaction
+        </button>
       </form>
-
-
-
     </>
   );
 };
