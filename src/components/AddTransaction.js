@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export const AddTransaction = ({setUpdatedFlag}) => {
+export const AddTransaction = ({toggleUpdatedFlag}) => {
   const [text, setText] = useState("");
   const [amount, setAmount] = useState("");
 
@@ -26,8 +26,7 @@ export const AddTransaction = ({setUpdatedFlag}) => {
     setText("");
     setAmount("");
 
-    // update flag
-    setUpdatedFlag(true);
+    toggleUpdatedFlag();
   };
 
   const addingTransaction = (transaction) => {

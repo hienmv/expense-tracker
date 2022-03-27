@@ -7,13 +7,18 @@ import { Balance } from './components/Balance';
 
 function App() {
   const [updatedFlag, setUpdatedFlag] = useState(false);
+
+  const toggleUpdatedFlag = () => {
+    setUpdatedFlag(updatedFlag => !updatedFlag);
+  }
+
   return (
     <div>
       <Header />
       <div className="container">
         <Balance updatedFlag={updatedFlag} />
         <TransactionHistory updatedFlag={updatedFlag} />
-        <AddTransaction setUpdatedFlag={setUpdatedFlag} />
+        <AddTransaction toggleUpdatedFlag={toggleUpdatedFlag} />
       </div>
     </div>
   );
