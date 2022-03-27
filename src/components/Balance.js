@@ -17,7 +17,7 @@ export const Balance = (updatedFlag) => {
         } else {
           _revenue += amount;
         }
-        setCost(_cost);
+        setCost(_cost * (-1));
         setRevenue(_revenue);
         setBalance(_cost + _revenue);
       });
