@@ -2,7 +2,9 @@ import React from "react";
 
 export const TransactionList = () =>{
     
-    const transactions = JSON.parse(localStorage.getItem("transactions"));
+    const transactions = (JSON.parse(localStorage.getItem("transactions"))).reverse();
+
+ 
 
     return(
         
@@ -12,7 +14,7 @@ export const TransactionList = () =>{
             {transactions.map((transaction) => 
             <li className={transaction.amount < 0 ? 'minus' : 'plus'}>
                 {transaction.title}
-                <span>{transaction.amount}</span>
+            <span>{transaction.amount < 0 ? '-':'+'}${Math.abs(transaction.amount )}</span>
                 <button className="delete-btn">x</button>
                     </li>)}
                     
