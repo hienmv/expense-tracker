@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export const AddTransaction = () => {
+export const AddTransaction = (toggleUpdatedFlag) => {
   const [text, setText] = useState("");
   const [amount, setAmount] = useState("");
 
@@ -25,6 +25,8 @@ export const AddTransaction = () => {
     // reset input value
     setText("");
     setAmount("");
+
+    toggleUpdatedFlag();
   };
 
   const addingTransaction = (transaction) => {
