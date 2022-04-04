@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { GlobalContext } from '../context/GlobalState';
 
 export const AddTransaction = () => {
   const [text, setText] = useState("");
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState(0);
+
+  const { addTransaction } = useContext (GlobalContext);
 
   const handleText = (event) => {
     setText(event.target.value);
@@ -17,17 +20,18 @@ export const AddTransaction = () => {
   const onSubmitTransaction = (event) => {
     event.preventDefault();
     const currentTransaction = {
-      title: text,
-      amount: amount,
+      text,
+      amount: +amount,
     };
-    addingTransaction(currentTransaction);
+    addTransaction(currentTransaction);
 
     // reset input value
     setText("");
     setAmount("");
   };
 
-  const addingTransaction = (transaction) => {
+
+ /* const addingTransaction = (transaction) => {
     // lấy ra danh sách các transaction hiện tại
     let currentTransactions = JSON.parse(localStorage.getItem("transactions"));
     if (currentTransactions == null) {
@@ -37,7 +41,8 @@ export const AddTransaction = () => {
     currentTransactions = [...currentTransactions, transaction];
     // lưu lại danh sách transaction vào local storage
     localStorage.setItem("transactions", JSON.stringify(currentTransactions));
-  };
+  };*/
+
 
   return (
     <>
