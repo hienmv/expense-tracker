@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 
-export const AddTransaction = () => {
+export const AddTransaction = ({toggleUpdatedFlag}) => {
   const [text, setText] = useState("");
   const [amount, setAmount] = useState("");
-
   const handleText = (event) => {
     setText(event.target.value);
   };
@@ -22,20 +21,18 @@ export const AddTransaction = () => {
     };
     addingTransaction(currentTransaction);
 
-    // reset input value
     setText("");
     setAmount("");
+
+    toggleUpdatedFlag();
   };
 
   const addingTransaction = (transaction) => {
-    // lấy ra danh sách các transaction hiện tại
     let currentTransactions = JSON.parse(localStorage.getItem("transactions"));
     if (currentTransactions == null) {
       currentTransactions = [];
     }
-    // thêm transaction hiện tại vào danh sách các transaction
     currentTransactions = [...currentTransactions, transaction];
-    // lưu lại danh sách transaction vào local storage
     localStorage.setItem("transactions", JSON.stringify(currentTransactions));
   };
 
